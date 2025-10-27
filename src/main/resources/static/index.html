@@ -3,61 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Patient ID Automation</title>
+  <title>Nation Automation Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Poppins', sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .loader {
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top: 3px solid #6366f1;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    label {
+      display: block;
+      text-align: left;
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 to-blue-200 flex justify-center items-center min-h-screen">
-  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-    <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">
-      🧠 Patient ID Automation
+<body class="flex justify-center items-center min-h-screen text-gray-100">
+
+  <div class="glass p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
+    <h1 class="text-3xl font-bold mb-6 text-white tracking-wide">
+      ⚙️ Nation Automation Portal
     </h1>
+    <p class="text-gray-200 mb-8">Start your NationwideLog automation securely and easily</p>
 
-    <form id="automationForm" class="space-y-4">
-      <input type="email" id="email" placeholder="📧 Email" class="w-full border p-2 rounded" required />
-      <input type="password" id="password" placeholder="🔑 Password" class="w-full border p-2 rounded" required />
+    <form id="automationForm" class="space-y-5 text-left">
 
-      <select id="practice" class="w-full border p-2 rounded">
-        <option>Colon & Rectal Surgeons of Long island</option>
-        <option>Dr. Patricia McCormack</option>
-        <option>ELIZABETH WEINTRAUB</option>
-        <option>EVERYDAYURGENTCARE</option>
-        <option>Leonard A. Feitell, M.D LLC</option>
-        <option>RASO & COHEN GASTROENTEROLOGY ASSOC</option>
-        <option>SWIFT TEST LLC</option>
-        <option>Well Urgent care Services</option>
-      </select>
-
-      <div class="flex justify-around">
-        <label class="flex items-center space-x-2">
-          <input type="radio" name="type" value="EOB" required />
-          <span>EOB</span>
-        </label>
-        <label class="flex items-center space-x-2">
-          <input type="radio" name="type" value="ERA" />
-          <span>ERA</span>
-        </label>
+      <!-- Email -->
+      <div>
+        <label for="email">📧 Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email"
+          class="w-full p-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-indigo-400 outline-none" required />
       </div>
 
-      <button
-        type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded transition duration-300"
-      >
-        🚀 Start Automation
-      </button>
+      <!-- Password -->
+      <div>
+        <label for="password">🔑 Password</label>
+        <input type="password" id="password" placeholder="Enter your password"
+          class="w-full p-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-indigo-400 outline-none" required />
+      </div>
+
+      <!-- Practice -->
+      <div>
+        <label for="practice">🏥 Select Practice</label>
+        <select id="practice"
+          class="w-full p-3 rounded-lg bg-white/90 text-gray-900 focus:ring-2 focus:ring-indigo-400 outline-none">
+          <option disabled selected>-- Choose Practice --</option>
+          <option>Colon & Rectal Surgeons of Long island</option>
+          <option>Dr. Patricia McCormack</option>
+          <option>ELIZABETH WEINTRAUB</option>
+          <option>EVERYDAYURGENTCARE</option>
+          <option>Leonard A. Feitell, M.D LLC</option>
+          <option>RASO & COHEN GASTROENTEROLOGY ASSOC</option>
+          <option>SWIFT TEST LLC</option>
+          <option>Well Urgent care Services</option>
+        </select>
+      </div>
+
+      <!-- Type -->
+      <div>
+        <label>📄 Select Type</label>
+        <div class="flex space-x-6">
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="EOB" class="text-indigo-600" required />
+            <span>EOB</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="ERA" class="text-indigo-600" />
+            <span>ERA</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center mt-6">
+        <button id="startBtn" type="submit"
+          class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold py-2 rounded-lg shadow-lg transition-all duration-300">
+          🚀 Start Automation
+        </button>
+      </div>
     </form>
 
-    <div id="log" class="mt-6 bg-gray-50 border border-gray-300 p-3 rounded h-48 overflow-y-auto text-sm font-mono"></div>
+    <!-- Logs -->
+    <div id="log"
+      class="mt-8 bg-black/40 border border-white/20 p-4 rounded-lg h-48 overflow-y-auto text-sm font-mono text-gray-200 shadow-inner">
+      <p class="text-gray-400">Logs will appear here...</p>
+    </div>
   </div>
 
   <script>
     const form = document.getElementById("automationForm");
     const log = document.getElementById("log");
+    const startBtn = document.getElementById("startBtn");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      log.innerHTML += "🔹 Starting automation...<br>";
-
       const data = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
@@ -65,18 +125,24 @@
         type: document.querySelector('input[name="type"]:checked').value,
       };
 
+      log.innerHTML += "🔹 Starting automation...<br>";
+      startBtn.disabled = true;
+      startBtn.innerHTML = '<span class="loader"></span> Running...';
+
       try {
         const res = await fetch("/run", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-
         const text = await res.text();
-        log.innerHTML += "✅ " + text + "<br>";
+        log.innerHTML += `<span class='text-green-400'>✅ ${text}</span><br>`;
       } catch (err) {
-        log.innerHTML += "❌ Error: " + err.message + "<br>";
+        log.innerHTML += `<span class='text-red-400'>❌ ${err.message}</span><br>`;
       }
+
+      startBtn.disabled = false;
+      startBtn.innerHTML = "🚀 Start Automation";
     });
   </script>
 </body>
