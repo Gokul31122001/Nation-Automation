@@ -1,12 +1,15 @@
-# Use Maven image to build the JAR
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# ====== BUILD STAGE ======
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY . .
+COPY pom.xml .
+COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Run the app using a lightweight JDK image
-FROM eclipse-temurin:21-jdk
+# ====== RUNTIME STAGE ======
+FROM selenium/standalone-chrome:latest  # ✅ Preinstalled Chrome + Driver + headless ready
+USER root
 WORKDIR /app
-COPY --from=build /app/target/Nation-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
