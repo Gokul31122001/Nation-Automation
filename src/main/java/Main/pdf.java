@@ -59,11 +59,18 @@ public class pdf {
 						XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream)) {
 
 					Sheet sheet = workbook.getSheetAt(0);  // Assume the first sheet contains patient data
-					  ChromeOptions options = new ChromeOptions();
-			            options.addArguments("--headless"); // Run Chrome without UI
-			            options.addArguments("--window-size=1920,1080"); // Set resolution to avoid element visibility issues
-			            options.addArguments("--disable-gpu"); // Disable GPU for headless mode
-			            options.addArguments("--disable-software-rasterizer"); // Disable software rasterizer
+				
+					ChromeOptions options = new ChromeOptions();
+					options.addArguments("--headless=new");  // ✅ New-style headless mode (Chrome 109+)
+					options.addArguments("--no-sandbox");
+					options.addArguments("--disable-dev-shm-usage");
+					options.addArguments("--disable-gpu");
+					options.addArguments("--disable-extensions");
+					options.addArguments("--remote-allow-origins=*");
+					options.addArguments("--window-size=1920,1080");
+
+					
+ // Disable software rasterizer
 			            WebDriver driver = new ChromeDriver(options);   // Pass options to ChromeDriver
 			        //    WebDriver driver=new ChromeDriver();
 			            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
