@@ -1,9 +1,7 @@
 services:
   - type: web
-    name: Nation-Automation
-    env: java
+    name: nation-automation
+    env: docker
     plan: free
-    buildCommand: mvn clean package
-    startCommand: java -jar target/Nation-0.0.1-SNAPSHOT.jar
-    region: oregon
-    autoDeploy: true
+    region: singapore
+    dockerfilePath: ./Dockerfile
