@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient ID Automation</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 flex justify-center items-center min-h-screen">
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">
+      🧠 Patient ID Automation
+    </h1>
+
+    <form id="automationForm" class="space-y-4">
+      <input type="email" id="email" placeholder="📧 Email" class="w-full border p-2 rounded" required />
+      <input type="password" id="password" placeholder="🔑 Password" class="w-full border p-2 rounded" required />
+
+      <select id="practice" class="w-full border p-2 rounded">
+        <option>Colon & Rectal Surgeons of Long island</option>
+        <option>Dr. Patricia McCormack</option>
+        <option>ELIZABETH WEINTRAUB</option>
+        <option>EVERYDAYURGENTCARE</option>
+        <option>Leonard A. Feitell, M.D LLC</option>
+        <option>RASO & COHEN GASTROENTEROLOGY ASSOC</option>
+        <option>SWIFT TEST LLC</option>
+        <option>Well Urgent care Services</option>
+      </select>
+
+      <div class="flex justify-around">
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="type" value="EOB" required />
+          <span>EOB</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="type" value="ERA" />
+          <span>ERA</span>
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded transition duration-300"
+      >
+        🚀 Start Automation
+      </button>
+    </form>
+
+    <div id="log" class="mt-6 bg-gray-50 border border-gray-300 p-3 rounded h-48 overflow-y-auto text-sm font-mono"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("automationForm");
+    const log = document.getElementById("log");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      log.innerHTML += "🔹 Starting automation...<br>";
+
+      const data = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+        practice: document.getElementById("practice").value,
+        type: document.querySelector('input[name="type"]:checked').value,
+      };
+
+      try {
+        const res = await fetch("/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const text = await res.text();
+        log.innerHTML += "✅ " + text + "<br>";
+      } catch (err) {
+        log.innerHTML += "❌ Error: " + err.message + "<br>";
+      }
+    });
+  </script>
+</body>
+</html>

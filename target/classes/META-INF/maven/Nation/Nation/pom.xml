@@ -83,6 +83,11 @@
             <version>9.1.0</version>
             <type>pom</type>
         </dependency>
+<dependency>
+  <groupId>org.json</groupId>
+  <artifactId>json</artifactId>
+  <version>20231013</version>
+</dependency>
 
         <!-- Spark Java for Web Framework -->
         <dependency>
